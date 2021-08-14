@@ -2,6 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
+// import "./assets/css/bootstrap.css"
+import "./assets/vendors/iconly/bold.css"
+import "./assets/vendors/perfect-scrollbar/perfect-scrollbar.css"
+import "./assets/vendors/bootstrap-icons/bootstrap-icons.css"
+import "./assets/css/app.css"
+import "./assets/css/custom.css"
+
 
 ReactDOM.render(
   <React.StrictMode>

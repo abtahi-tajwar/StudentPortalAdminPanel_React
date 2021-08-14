@@ -1,0 +1,9 @@
+.sidebar-wrapper .menu .submenu {
+    display: block !important;
+    max-height: 0;
+    transition: max-height 0.8s linear;
+}
+.sidebar-wrapper .menu .submenu.active {
+    max-height: 500px;
+    transition: max-height 0.8s linear;
+}

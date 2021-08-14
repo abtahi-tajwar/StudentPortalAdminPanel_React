@@ -1,9 +1,14 @@
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import { useState, useRef } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "./pages/dashboard/Dashboard";
+import AllUsers from "./pages/users/AllUsers";
+import AllPosts from "./pages/posts/AllPosts";
+import CreatePost from "./pages/posts/CreatePost";
 
 function App() {
 
@@ -27,9 +32,18 @@ function App() {
               <Route path="/" exact> 
                 <Dashboard setPageName={setPageName}/>
               </Route>  
+              <Route path="/posts/all" exact>
+                <AllPosts setPageName={setPageName} />
+              </Route>
+              <Route path="/posts/create" exact>
+                <CreatePost setPageName={setPageName} />
+              </Route>
+              <Route path="/users/all" exact> 
+                <AllUsers setPageName={setPageName}/>
+              </Route> 
             </Switch>        
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </Router>

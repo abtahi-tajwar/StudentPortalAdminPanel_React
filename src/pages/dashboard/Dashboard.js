@@ -103,17 +103,6 @@ const Dashboard = ({ setPageName }) => {
         })
     },[])
 
-
-    // var chartVisitorsProfile = new ApexCharts(document.getElementById('chart-visitors-profile'), optionsVisitorsProfile)
-    // var chartEurope = new ApexCharts(document.querySelector("#chart-europe"), optionsEurope);
-    // var chartAmerica = new ApexCharts(document.querySelector("#chart-america"), optionsAmerica);
-    // var chartIndonesia = new ApexCharts(document.querySelector("#chart-indonesia"), optionsIndonesia);
-
-    // chartIndonesia.render();
-    // chartAmerica.render();
-    // chartEurope.render();
-    // chartVisitorsProfile.render();
-
     return (
         <section className="row">
             <div className="col-12 col-lg-9">
@@ -223,7 +212,8 @@ const Dashboard = ({ setPageName }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {topPosts.map(post => <tr>
+                                            {topPosts.map(post => 
+                                            <tr key={post.id}>
                                                 <td className="col-3">
                                                     <div className="d-flex align-items-center">
                                                         <div className="avatar avatar-md">
@@ -235,7 +225,8 @@ const Dashboard = ({ setPageName }) => {
                                                 <td className="col-auto">
                                                     <p className=" mb-0">{post.title}</p>
                                                 </td>
-                                            </tr>)}
+                                            </tr>
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>
