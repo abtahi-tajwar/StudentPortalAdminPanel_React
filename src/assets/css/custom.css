@@ -1,9 +1,16 @@
 .sidebar-wrapper .menu .submenu {
     display: block !important;
     max-height: 0;
-    transition: max-height 0.8s linear;
+    animation-delay: unset !important;
+    transition: max-height 0.8s ease-out;
 }
 .sidebar-wrapper .menu .submenu.active {
     max-height: 500px;
-    transition: max-height 0.8s linear;
+    transition: max-height 0.8s ease-in;
+}
+.MuiTableBody-root .MuiTableRow-root:nth-child(even) {
+    background-color: #dadada;
+}
+.MuiTableBody-root .MuiTableRow-root:nth-child(odd) {
+    background-color: #f3f3f3;
 }

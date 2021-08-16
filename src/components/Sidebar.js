@@ -74,7 +74,7 @@ function Sidebar() {
                                 </a>
                                 <ul ref={categories} className="submenu">
                                     <li className="submenu-item ">
-                                        <Link to="/users/all">All Users</Link>
+                                        <Link to="/categories/all">All Categories</Link>
                                     </li>
                                     <li className="submenu-item ">
                                         <Link to="/">Badge</Link>
@@ -85,7 +85,7 @@ function Sidebar() {
                                 className={activeMenu.roles !== undefined ? 'sidebar-item active' : 'sidebar-item'} 
                                 onClick={() => handleSetActive('roles')}
                             >
-                                <Link to="/" className='sidebar-link'>
+                                <Link to="/users/change_role" className='sidebar-link'>
                                     <i class="bi bi-award-fill"></i>
                                     <span>Roles</span>
                                 </Link>

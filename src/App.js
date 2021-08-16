@@ -9,6 +9,9 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import AllUsers from "./pages/users/AllUsers";
 import AllPosts from "./pages/posts/AllPosts";
 import CreatePost from "./pages/posts/CreatePost";
+import AllCategories from "./pages/categories/AllCategories";
+import User from "./pages/users/User";
+import Roles from "./pages/roles/Roles";
 
 function App() {
 
@@ -39,8 +42,20 @@ function App() {
                 <CreatePost setPageName={setPageName} />
               </Route>
               <Route path="/users/all" exact> 
-                <AllUsers setPageName={setPageName}/>
+                <AllUsers setPageName={setPageName} />
               </Route> 
+              <Route path="/users/user/:id" exact component= {
+                  ({ match }) => {
+                    return <User setPageName={setPageName} match={match}/>
+                  } 
+                }>                
+              </Route>
+              <Route path="/users/change_role" exact>
+                <Roles setPageName={setPageName} />
+              </Route>
+              <Route path="/categories/all">
+                <AllCategories setPageName={setPageName} />
+              </Route>
             </Switch>        
           </div>
           {/* <Footer /> */}

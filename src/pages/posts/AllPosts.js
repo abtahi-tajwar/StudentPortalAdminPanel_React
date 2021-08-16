@@ -2,8 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import MaterialTable from 'material-table'
 import { ClipLoader } from 'react-spinners'
-import { routes, callApi } from '../../routes'
-import DeleteIcon from '@material-ui/icons/Delete';
+import { routes, callApi, deleteReq } from '../../routes'
+
 import EditIcon from '@material-ui/icons/Edit';
 
 const loaderCss = {
@@ -32,37 +32,33 @@ function AllPosts({ setPageName }) {
         var days = Math.round(Math.abs(date2InMillis - date1InMillis) / oneDay);
         return days;
     }
+
+    function deleteItem(id) {
+        let newRows = rows.filter(row => row.id !== id)
+        setRows(newRows)
+        deleteReq(routes.adminDeletePost(id)).then(res => console.log(res))
+    }
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(true);
     
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        { field: 'id', title: 'ID', width: 90 },
         {
           field: 'title',
-          headerName: 'Title',
+          title: 'Title',
           width: 150
         },
         {
             field: 'date',
-            headerName: 'Date',
+            title: 'Date',
             render: rowData  => <p>{rowData.created_at} days ago</p>,
             width: 150
         },
         {
             field: 'author',
-            headerName: 'Author',
+            title: 'Author',
             width: 150
-        },
-        {
-            field: 'action',
-            headerName: 'Action',
-            width: 10,
-            render: rowData => <div>
-                <button id={rowData.id} className="btn btn-primary"><EditIcon /></button>
-                &nbsp;
-                <button id={rowData.id} className="btn btn-danger"><DeleteIcon /></button>
-            </div>
-        },                
+        }             
     ];
 
     useEffect(() => {
@@ -97,10 +93,22 @@ function AllPosts({ setPageName }) {
                 columns={columns}
                 isEditable={true}
                 pageSize={2}
-                title={'All users'}
+                title={'All Posts'}
                 onChangePage={(e, page) =>
                     handlePagnation(page)
                 }
+                options= {{
+                    headerStyle: {
+                        fontWeight: 'bold'
+                    }
+                }}
+                actions={[
+                    {
+                        icon: 'delete',
+                        tooltip: 'Delete',
+                        onClick: (event, rowData) => deleteItem(rowData.id)
+                    },
+                ]}
             /> }
             
         </div>
