@@ -55,7 +55,7 @@ function Sidebar() {
 
                             <li className="sidebar-item  has-sub" onClick={() => handleScrollbarSubmenu(posts)}>
                                 <a href="#" className='sidebar-link'>
-                                    <i class="bi bi-file-post"></i>
+                                    <i className="bi bi-file-post"></i>
                                     <span>Posts</span>
                                 </a>
                                 <ul ref={posts} className="submenu">
@@ -69,15 +69,12 @@ function Sidebar() {
                             </li>
                             <li className="sidebar-item  has-sub" onClick={() => handleScrollbarSubmenu(categories)}>
                                 <a href="#" className='sidebar-link'>
-                                    <i class="bi bi-tags-fill"></i>
+                                    <i className="bi bi-tags-fill"></i>
                                     <span>Categories</span>
                                 </a>
                                 <ul ref={categories} className="submenu">
                                     <li className="submenu-item ">
                                         <Link to="/categories/all">All Categories</Link>
-                                    </li>
-                                    <li className="submenu-item ">
-                                        <Link to="/">Badge</Link>
                                     </li>
                                 </ul>
                             </li>
@@ -86,7 +83,7 @@ function Sidebar() {
                                 onClick={() => handleSetActive('roles')}
                             >
                                 <Link to="/users/change_role" className='sidebar-link'>
-                                    <i class="bi bi-award-fill"></i>
+                                    <i className="bi bi-award-fill"></i>
                                     <span>Roles</span>
                                 </Link>
                             </li>
@@ -95,7 +92,7 @@ function Sidebar() {
                                 onClick={() => handleSetActive('allusers')}
                             >
                                 <Link to="/users/all" className='sidebar-link'>
-                                    <i class="bi bi-people-fill"></i>
+                                    <i className="bi bi-people-fill"></i>
                                     <span>All Users</span>
                                 </Link>
                             </li>   
@@ -103,8 +100,8 @@ function Sidebar() {
                                 className={activeMenu.moderator_requests !== undefined ? 'sidebar-item active' : 'sidebar-item'} 
                                 onClick={() => handleSetActive('moderator_requests')}
                             >
-                                <Link to="/users/all" className='sidebar-link'>
-                                    <i class="bi bi-person-check-fill"></i>
+                                <Link to="/moderator_request" className='sidebar-link'>
+                                    <i className="bi bi-person-check-fill"></i>
                                     <span>Moderator Requests</span>
                                 </Link>
                             </li>
@@ -112,21 +109,19 @@ function Sidebar() {
                                 className={activeMenu.website_info !== undefined ? 'sidebar-item active' : 'sidebar-item'} 
                                 onClick={() => handleSetActive('website_info')}
                             >
-                                <Link to="/users/all" className='sidebar-link'>
-                                    <i class="bi bi-info-circle-fill"></i>
+                                <Link to="/website_info" className='sidebar-link'>
+                                    <i className="bi bi-info-circle-fill"></i>
                                     <span>Website Info</span>
                                 </Link>
-                            </li>
+                            </li>                 
                             <li 
-                                className={activeMenu.privacy_policy !== undefined ? 'sidebar-item active' : 'sidebar-item'} 
-                                onClick={() => handleSetActive('privacy_policy')}
+                                className='sidebar-item' 
                             >
-                                <Link to="/users/all" className='sidebar-link'>
-                                    <i class="bi bi-file-earmark-lock-fill"></i>
-                                    <span>Privacy Policy</span>
+                                <Link to="/logout" className='sidebar-link'>
+                                <i className="bi bi-box-arrow-right"></i>
+                                    <span>Logout</span>
                                 </Link>
-                            </li>                   
-
+                            </li>
                         </ul>
                     </div>
                     <button className="sidebar-toggler btn x"><i data-feather="x"></i></button>

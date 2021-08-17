@@ -1,7 +1,16 @@
 const base = 'http://127.0.0.1:8000'
-const authToken = "Bearer $2y$10$FlOGWK5tYonpmWcYdyBTk.V0r1x9.EuDwTMvFKKMDqZbmbyWyCEdC::1"
-
+// const authToken = "Bearer $2y$10$FlOGWK5tYonpmWcYdyBTk.V0r1x9.EuDwTMvFKKMDqZbmbyWyCEdC::1"
+let authToken = ""
+let type = ""
+export const setAuthToken = (token) => {
+    authToken = token
+}
+export const setType = (t) => {
+    type = t
+}
 export const routes = {
+    login: `${base}/api/login`,
+    logout: `${base}/api/logout`,
     getDashboardData: `${base}/api/admin/dashboard/data`,
     getAllUsers: `${base}/api/admin/users`,
     getUser: (id => `${base}/api/admin/users/${id}`),
@@ -13,10 +22,16 @@ export const routes = {
     createPost: `${base}/api/posts/create`,
     getAllCategories: `${base}/api/categories`,
     createCategory: `${base}/api/admin/categories/create`,
+    editCategory: `${base}/api/admin/categories/edit`,
     deleteCategory: (id => `${base}/api/admin/categories/delete/${id}`),
     banUser: (id =>`${base}/api/admin/users/ban/${id}`),
     unBanUser: (id =>`${base}/api/admin/users/unban/${id}`),
-    toggleBanUser: (id =>`${base}/api/admin/users/toggle_ban/${id}`)
+    toggleBanUser: (id =>`${base}/api/admin/users/toggle_ban/${id}`),
+    moderatorRequests: `${base}/api/admin/moderator/request`,
+    acceptModerator: (id => `${base}/api/admin/moderator/approve/${id}`),
+    declineModerator: (id => `${base}/api/admin/moderator/decline/${id}`),
+    getWebsiteInfo: `${base}/api/admin/website-info`,
+    updateWebsiteInfo: `${base}/api/admin/update/website-info`
 }
 
 export const callApi = async (url) => {
@@ -27,7 +42,6 @@ export const callApi = async (url) => {
                 "Authorization": authToken
             }
         })
-        console.log(res)
         const contentType = res.headers.get("content-type");
         
         if(contentType.indexOf("application/json") === -1) {
@@ -35,7 +49,6 @@ export const callApi = async (url) => {
         } else {
             data = await res.json()
         }
-
         return data
     } catch (e) {
         return e

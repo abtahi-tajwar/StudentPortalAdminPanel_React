@@ -6,6 +6,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Delete,Edit } from '@material-ui/icons';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import { Button } from '@material-ui/core';
+import { Button as BootstrapButton } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 
 const loaderCss = {
@@ -27,6 +29,13 @@ function AllCategories({ setPageName }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [currentDeleteCategoryId, setCurrentDeleteCategoryId] = useState(0);
     const [newCategory, setNewCategory] = useState('');
+    const [categoryEditAction, setCategoryEditAction] = useState({
+        editMode: false,
+        payload: {
+            name: "",
+            id: ""
+        }
+    });
 
     function calculateDaysBetweenDates(date1) {
         var oneDay = 24 * 60 * 60 * 1000;
@@ -65,8 +74,16 @@ function AllCategories({ setPageName }) {
         setRows(newRows)
         setModalOpen(false)
     }
-    const editCategory = (id) => {
-        console.log('edit category'+id);
+    const editCategory = (id, name) => {
+        //handleEditCategoryModalOpen();
+        setCategoryEditAction({
+            editMode: true,
+            payload: {
+                id: id,
+                name: name                
+            }
+        })
+        
     }
     const columns = [
         { field: 'id', title: 'ID', width: 90 },
@@ -88,6 +105,36 @@ function AllCategories({ setPageName }) {
     const handleModalClose = () => {
         setModalOpen(false)
     }
+    const handleEditCategoryModalClose = () => {
+        setCategoryEditAction({ ...categoryEditAction, editMode: false })
+    }
+    const handleEditCategoryModalOpen = () => {
+        setCategoryEditAction({ ...categoryEditAction, editMode: true })
+    }
+    const handleCategoryEdit = (e) => {
+        setCategoryEditAction({
+            ...categoryEditAction,
+            payload: {
+                ...categoryEditAction.payload,
+                name: e.target.value
+            }
+        })
+    }
+    const confirmCategoryEdit = () => {
+        postFormValue(routes.editCategory, {
+            id: categoryEditAction.payload.id,
+            name: categoryEditAction.payload.name
+        }).then(result => console.log(result))
+
+        const newRows = rows.map(row => {
+            if(row.id === categoryEditAction.payload.id) {
+                return { ...row, id: categoryEditAction.payload.id, name: categoryEditAction.payload.name }
+            }
+            return { ...row }
+        })
+        setRows(newRows)
+        handleEditCategoryModalClose()
+    }
     useEffect(() => {
         setPageName("All Categories");
         callApi(routes.getAllCategories)
@@ -102,9 +149,11 @@ function AllCategories({ setPageName }) {
             })
             setRows(result)
             setLoading(false)
-            console.log(result, rows)
         })
     }, [])
+    useEffect(() => {
+        console.log(categoryEditAction)
+    })
     
     return (
         <div>
@@ -115,6 +164,26 @@ function AllCategories({ setPageName }) {
                 title="Deleting Category"
                 message="Are you sure you want to delete this category?"
             />
+            <Modal show={categoryEditAction.editMode} onHide={handleEditCategoryModalClose} animation={false}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Category</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <input 
+                        type="text"
+                        value={categoryEditAction.payload.name} 
+                        onChange={handleCategoryEdit}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
+                    <BootstrapButton variant="secondary" onClick={confirmCategoryEdit}>
+                        Confirm
+                    </BootstrapButton>
+                    <BootstrapButton variant="primary" onClick={handleEditCategoryModalClose}>
+                        Cancel
+                    </BootstrapButton>
+                </Modal.Footer>
+            </Modal>
             <div className="col-7 mb-3">
                 <div className="row">                    
                     <input type="text" className="form-control" className="col-8" value={newCategory} onChange={handleInput}/>
@@ -146,7 +215,7 @@ function AllCategories({ setPageName }) {
                     {
                         icon: () => <Edit color="primary" />,
                         tooltip: 'Edit',
-                        onclick: (event, rowData) => editCategory(rowData.id)
+                        onClick: (event, rowData) => editCategory(rowData.id, rowData.name)
                     }
                 ]}
             /> }
