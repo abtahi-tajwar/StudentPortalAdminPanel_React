@@ -1,11 +1,11 @@
 import React from 'react'
 import MaterialTable from 'material-table';
 import { useState, useEffect } from 'react';
-import { routes, callApi, deleteReq, postFormValue } from '../../routes';
+import { routes, callApi /*, deleteReq, postFormValue*/ } from '../../routes';
 import ClipLoader from "react-spinners/ClipLoader";
-import { Delete,Edit } from '@material-ui/icons';
+// import { Delete,Edit } from '@material-ui/icons';
 import ConfirmationModal from '../../components/ConfirmationModal';
-import { Button } from '@material-ui/core';
+// import { Button } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { Link } from 'react-router-dom';
 
@@ -15,10 +15,10 @@ const loaderCss = {
     margin: '0 auto',
     border: '5px solid #435EBE'
 }
-const deleteIconStyle = {
-    color: 'red',
-    cursor: 'pointer'
-}
+// const deleteIconStyle = {
+//     color: 'red',
+//     cursor: 'pointer'
+// }
 
 function ModeratorRequests({ setPageName }) {
 

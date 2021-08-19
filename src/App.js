@@ -1,8 +1,8 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
-import { useState, useRef } from "react";
+// import Footer from "./components/Footer";
+import { useState /*, useRef*/ } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "./pages/dashboard/Dashboard";
 import AllUsers from "./pages/users/AllUsers";

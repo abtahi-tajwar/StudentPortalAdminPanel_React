@@ -4,7 +4,7 @@ import MaterialTable from 'material-table'
 import { ClipLoader } from 'react-spinners'
 import { routes, callApi, deleteReq } from '../../routes'
 
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
 
 const loaderCss = {
     width: '100px',
@@ -12,10 +12,10 @@ const loaderCss = {
     margin: '0 auto',
     border: '5px solid #435EBE'
 }
-const deleteIconStyle = {
-    color: 'red',
-    cursor: 'pointer'
-}
+// const deleteIconStyle = {
+//     color: 'red',
+//     cursor: 'pointer'
+// }
 
 function AllPosts({ setPageName }) {
 

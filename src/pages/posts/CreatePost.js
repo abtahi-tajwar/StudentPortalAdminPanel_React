@@ -1,7 +1,7 @@
 import React from 'react'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Select from 'react-select'
-import { routes, callApi, postFormValue, postValue } from '../../routes'
+import { routes, callApi, postFormValue, /*postValue*/ } from '../../routes'
 
 function CreatePost({ setPageName }) {
 

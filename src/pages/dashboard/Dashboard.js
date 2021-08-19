@@ -4,7 +4,10 @@ import { useState, useEffect } from 'react';
 import { routes, callApi, getUname, getId } from '../../routes';
 
 const Dashboard = ({ setPageName }) => {
-    setPageName("Dashboard")
+    // setPageName("Dashboard")
+    useEffect(() => {
+        setPageName("Dashboard")
+      }, []);
 
     const [profileVisit, setProfileVisit] = useState({
         annotations: {
@@ -213,7 +216,7 @@ const Dashboard = ({ setPageName }) => {
                     <div className="col-12">
                         <div className="card">
                             <div className="card-header">
-                                <h4>Latest Comments</h4>
+                                <h4>Latest Post</h4>
                             </div>
                             <div className="card-body">
                                 <div className="table-responsive">
