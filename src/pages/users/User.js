@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { callApi, postFormValue, postValue, routes } from '../../routes'
+import { callApi, getType, postFormValue, postValue, routes } from '../../routes'
 import { CircularProgress } from '@material-ui/core'
 import { Button } from '@material-ui/core'
 import ConfirmationModal from '../../components/ConfirmationModal'
@@ -27,14 +27,14 @@ function User({ match, setPageName }) {
         setUserRole({ ...userRole, type: e.target.value })
         setChangeButtonRender(true)
     }
-    const handleRoleChangeModal = (e) => {        
+    const handleRoleChangeModal = (e) => {
         handleConfirmationModalOpen()
     }
     const changeRole = () => {
-        postFormValue(routes.changeUserRole, userRole).then(response => () => { 
-            console.log(response) 
+        postFormValue(routes.changeUserRole, userRole).then(response => () => {
+            console.log(response)
         })
-        
+
         handleConfirmationModalClose()
     }
     const handleConfirmationModalOpen = () => {
@@ -44,47 +44,52 @@ function User({ match, setPageName }) {
         setConfirmationModal(false)
     }
     useEffect(() => {
-        if(id !== undefined) {
+        if (id !== undefined) {
             callApi(routes.getUser(id)).then(response => {
                 console.log(response)
                 setUser(response)
-                
+
             })
         }
         console.log(match)
     }, [])
     useEffect(() => {
-        if(user !== undefined) {
+        if (user !== undefined) {
             setUserRole({ ...userRole, id: user.user.id, prev_type: user.user.type })
         }
-        
+
     }, [user])
 
-    
+
     return (
         <div>
-            <ConfirmationModal 
-                open={confimationModal}
-                handleConfirm={changeRole}
-                handleClose={handleConfirmationModalClose}
-                title="Are you sure you want to change role of the user?"
-                message="Warning! Changing role can permit some actions actions to the specific user"
-            />
-            {user === undefined ? 
-                <CircularProgress variant="determinate" value={25}  /> :  
-                <div className="row">              
+            {getType() === 'admin' &&
+
+                <ConfirmationModal
+                    open={confimationModal}
+                    handleConfirm={changeRole}
+                    handleClose={handleConfirmationModalClose}
+                    title="Are you sure you want to change role of the user?"
+                    message="Warning! Changing role can permit some actions actions to the specific user"
+                />
+            }
+            {user === undefined ?
+                <CircularProgress variant="determinate" value={25} /> :
+                <div className="row">
                     <div className="col-md-6 col-12">
                         <div className="avatar avatar-xl">
                             <img src={user.user.details.image} />
                         </div>
                         <h2 className="display-6"><b>{user.user.details.name}</b></h2>
                         <h3 className="display-6">@{user.user.uname}</h3>
-                        <select className="form-control mb-3" onChange={handleRoleChange}>
-                            {roleSelectOptions.map(role => (role.value === user.user.type ? 
-                                <option key={role.id} value={role.value}  selected>{role.value}</option> : 
-                                <option key={role.id} value={role.value} >{role.value}</option> )
-                            )}
-                        </select>
+                        {getType() === 'admin' &&
+                            <select className="form-control mb-3" onChange={handleRoleChange}>
+                                {roleSelectOptions.map(role => (role.value === user.user.type ?
+                                    <option key={role.id} value={role.value} selected>{role.value}</option> :
+                                    <option key={role.id} value={role.value} >{role.value}</option>)
+                                )}
+                            </select>
+                        }
                         {changeButtonRender && <Button variant="contained" color="primary" onClick={handleRoleChangeModal}>Change</Button>}
                     </div>
                     <div className="col-md-6 col-12">
@@ -103,7 +108,7 @@ function User({ match, setPageName }) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {user.posts.map(post => 
+                                            {user.posts.map(post =>
                                                 <tr key={post.id}>
                                                     <td className="col-auto">
                                                         <p className=" mb-0">{post.title}</p>
@@ -122,10 +127,10 @@ function User({ match, setPageName }) {
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             }
 
-            
+
         </div>
     )
 }

@@ -8,6 +8,11 @@ export const setAuthToken = (token) => {
 export const setType = (t) => {
     type = t
 }
+
+export const getType = () => {
+    return type;
+}
+
 export const routes = {
     login: `${base}/api/login`,
     logout: `${base}/api/logout`,
@@ -40,6 +45,7 @@ export const callApi = async (url) => {
         let res = await fetch(url, {
             headers: {
                 "Authorization": authToken
+               
             }
         })
         const contentType = res.headers.get("content-type");

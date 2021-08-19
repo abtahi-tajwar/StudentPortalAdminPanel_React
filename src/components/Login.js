@@ -25,7 +25,7 @@ function Login({ setIsLoggedIn }) {
                 if(response.hasOwnProperty("error")) {
                     setError(response.error)
                 } else {
-                    if(response.type !== 'admin') {
+                    if(response.type !== 'admin' && response.type !== 'moderator' ) {
                         setError("Unable to access!")
                     } else {
                         setAuthToken(`Bearer ${response.token}::${response.id}`)

@@ -1,6 +1,5 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import { useState, useRef } from "react";
@@ -16,47 +15,50 @@ import ModeratorRequests from "./pages/moderator_request/ModeratorRequests";
 import WebsiteInfo from "./pages/website/WebsiteInfo";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import { getType } from "./routes";
+
 
 function App() {
 
   const [pageName, setPageName] = useState('Dashboard');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+
   return (
     <div>
-      { !isLoggedIn ? 
-        <Login setIsLoggedIn={setIsLoggedIn}/> :
+      {!isLoggedIn ?
+        <Login setIsLoggedIn={setIsLoggedIn} /> :
         <Router>
           <div id="app">
             <Sidebar />
             <div id="main">
               <header className="mb-3">
-                  <a href="#" className="burger-btn d-block d-xl-none">
-                      <i className="bi bi-justify fs-3"></i>
-                  </a>
+                <a href="#" className="burger-btn d-block d-xl-none">
+                  <i className="bi bi-justify fs-3"></i>
+                </a>
               </header>
               <div className="page-heading">
-                  <h3>{ pageName }</h3>
+                <h3>{pageName}</h3>
               </div>
-              <div className="page-content"> 
+              <div className="page-content">
+
                 <Switch>
-                  <Route path="/" exact> 
-                    <Dashboard setPageName={setPageName}/>
-                  </Route>  
+                  <Route path="/" exact>
+                    <Dashboard setPageName={setPageName} />
+                  </Route>
                   <Route path="/posts/all" exact>
                     <AllPosts setPageName={setPageName} />
                   </Route>
                   <Route path="/posts/create" exact>
                     <CreatePost setPageName={setPageName} />
                   </Route>
-                  <Route path="/users/all" exact> 
+                  <Route path="/users/all" exact>
                     <AllUsers setPageName={setPageName} />
-                  </Route> 
-                  <Route path="/users/user/:id" exact component= {
-                      ({ match }) => {
-                        return <User setPageName={setPageName} match={match}/>
-                      } 
-                    }>                
+                  </Route>
+                  <Route path="/users/user/:id" exact component={
+                    ({ match }) => {
+                      return <User setPageName={setPageName} match={match} />
+                    }
+                  }>
                   </Route>
                   <Route path="/users/change_role" exact>
                     <Roles setPageName={setPageName} />
@@ -64,23 +66,28 @@ function App() {
                   <Route path="/categories/all">
                     <AllCategories setPageName={setPageName} />
                   </Route>
-                  <Route path="/moderator_request">
-                    <ModeratorRequests setPageName={setPageName} />
-                  </Route>
-                  <Route path="/website_info">
-                    <WebsiteInfo setPageName={setPageName} />
-                  </Route>
+                  {getType() === 'admin' &&
+                    <Route path="/moderator_request">
+                      <ModeratorRequests setPageName={setPageName} />
+                    </Route>
+                  }
+                  {getType() === 'admin' &&
+                    <Route path="/website_info">
+                      <WebsiteInfo setPageName={setPageName} />
+                    </Route>
+
+                  }
                   <Route path="/logout">
                     <Logout setIsLoggedIn={setIsLoggedIn} />
                   </Route>
-                </Switch>        
+                </Switch>
               </div>
               {/* <Footer /> */}
             </div>
           </div>
         </Router>
       }
-      
+
     </div>
   );
 }

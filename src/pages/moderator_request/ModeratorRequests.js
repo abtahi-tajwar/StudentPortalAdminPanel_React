@@ -119,8 +119,8 @@ function ModeratorRequests({ setPageName }) {
                 open={modalOpen} 
                 handleConfirm={confirmModeratorAction}
                 handleClose={handleModalClose}
-                title="Deleting Category"
-                message="Are you sure you want to delete this category?"
+                title="Accept Moderator"
+                message="Are you sure you want to Accpet this Moderator?"
             />
             {loading ? 
             <ClipLoader 
@@ -137,7 +137,7 @@ function ModeratorRequests({ setPageName }) {
                     pageSize: 10,
                     pageSizeOptions: [5, 10, 20]
                 }}                
-                title={'All Categories'}
+                title={'All Moderator Request'}
                 actions={[
                     rowData => ({
                         icon: () => <Link to={`/users/user/${rowData.id}`}><VisibilityIcon color="primary" /></Link>,

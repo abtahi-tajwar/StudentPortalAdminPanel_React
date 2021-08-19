@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { getType } from '../routes';
 
 function Sidebar() {
     const posts = useRef()
@@ -78,6 +79,8 @@ function Sidebar() {
                                     </li>
                                 </ul>
                             </li>
+                            {getType() === 'admin' && 
+                            
                             <li 
                                 className={activeMenu.roles !== undefined ? 'sidebar-item active' : 'sidebar-item'} 
                                 onClick={() => handleSetActive('roles')}
@@ -87,6 +90,7 @@ function Sidebar() {
                                     <span>Roles</span>
                                 </Link>
                             </li>
+                            }
                             <li 
                                 className={activeMenu.allusers !== undefined ? 'sidebar-item active' : 'sidebar-item'} 
                                 onClick={() => handleSetActive('allusers')}
@@ -96,6 +100,7 @@ function Sidebar() {
                                     <span>All Users</span>
                                 </Link>
                             </li>   
+                            {getType() === 'admin' && 
                             <li 
                                 className={activeMenu.moderator_requests !== undefined ? 'sidebar-item active' : 'sidebar-item'} 
                                 onClick={() => handleSetActive('moderator_requests')}
@@ -105,6 +110,9 @@ function Sidebar() {
                                     <span>Moderator Requests</span>
                                 </Link>
                             </li>
+                        }
+                        {getType() === 'admin' &&
+                        
                             <li 
                                 className={activeMenu.website_info !== undefined ? 'sidebar-item active' : 'sidebar-item'} 
                                 onClick={() => handleSetActive('website_info')}
@@ -114,6 +122,8 @@ function Sidebar() {
                                     <span>Website Info</span>
                                 </Link>
                             </li>                 
+                        }
+                            
                             <li 
                                 className='sidebar-item' 
                             >
