@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { postFormValue, routes, setAuthToken, setType } from '../routes';
+import { postFormValue, routes, setAuthToken, setId, setType, setUname } from '../routes';
 
 function Login({ setIsLoggedIn }) {
 
@@ -30,6 +30,8 @@ function Login({ setIsLoggedIn }) {
                     } else {
                         setAuthToken(`Bearer ${response.token}::${response.id}`)
                         setType(response.type)
+                        setUname(response.uname)
+                        setId(response.id)
                         setIsLoggedIn(true)
                     }                    
                 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts'
 import { useState, useEffect } from 'react';
-import { routes, callApi } from '../../routes';
+import { routes, callApi, getUname, getId } from '../../routes';
 
 const Dashboard = ({ setPageName }) => {
     setPageName("Dashboard")
@@ -11,14 +11,14 @@ const Dashboard = ({ setPageName }) => {
             position: 'back'
         },
         dataLabels: {
-            enabled:false
+            enabled: false
         },
         chart: {
             type: 'bar',
             height: 300
         },
         fill: {
-            opacity:1
+            opacity: 1
         },
         plotOptions: {
         },
@@ -34,11 +34,11 @@ const Dashboard = ({ setPageName }) => {
     const [visitorsProfile, setVisitorsProfile] = useState({
         series: [],
         labels: [],
-        colors: ['#435ebe','#55c6e8'],
+        colors: ['#435ebe', '#55c6e8'],
         chart: {
             type: 'donut',
             width: '100%',
-            height:'350px'
+            height: '350px'
         },
         legend: {
             position: 'bottom'
@@ -54,19 +54,32 @@ const Dashboard = ({ setPageName }) => {
 
     const [topPosts, setTopPosts] = useState([])
     const [userCounts, setUserCounts] = useState({
-        student_count : 0,
-        instructor_count : 0,
-        admin_count : 0,
-        moderator_count : 0
+        student_count: 0,
+        instructor_count: 0,
+        admin_count: 0,
+        moderator_count: 0
     })
 
+    const [user, setUser] = useState(undefined)
+
     useEffect(() => {
+
+        if (getId() !== undefined) {
+            callApi(routes.getUser(getId())).then(response => {
+                console.log(response)
+                setUser(response)
+                // console.log(user.user.details.image)
+
+            })
+        }
+
+
         callApi(routes.getDashboardData).then(data => {
             const category_names = data.category_data.map(item => item.name)
             const category_post_counts = data.category_data.map(item => item.post_count)
 
             setProfileVisit({
-                ...profileVisit, 
+                ...profileVisit,
                 series: [{
                     name: 'Category Post Count',
                     data: category_post_counts
@@ -78,19 +91,19 @@ const Dashboard = ({ setPageName }) => {
             const totatStudentAndInstructorCont = data.student_count + data.instructor_count
             const studentPercentage = parseFloat(((data.student_count / totatStudentAndInstructorCont) * 100).toFixed(2))
             const instructorPercentage = parseFloat(((data.instructor_count / totatStudentAndInstructorCont) * 100).toFixed(2))
-            
+
             setVisitorsProfile({
                 ...visitorsProfile,
                 series: [studentPercentage, instructorPercentage],
                 labels: ['student', 'instructors']
             })
-            
+
             const topPosts = data.top_posts.map(post => {
                 return {
                     id: post.id,
                     title: post.title,
                     uname: post.uname,
-                    user_avatar: post.user_avatar            
+                    user_avatar: post.user_avatar
                 }
             })
             setTopPosts(topPosts)
@@ -101,7 +114,7 @@ const Dashboard = ({ setPageName }) => {
                 moderator_count: data.moderator_count
             })
         })
-    },[])
+    }, [])
 
     return (
         <section className="row">
@@ -184,7 +197,7 @@ const Dashboard = ({ setPageName }) => {
                             </div>
                             <div className="card-body">
                                 {/* <div id="chart-profile-visit"></div> */}
-                                <Chart 
+                                <Chart
                                     options={profileVisit}
                                     series={profileVisit.series}
                                     type={profileVisit.chart.type}
@@ -196,7 +209,7 @@ const Dashboard = ({ setPageName }) => {
                     </div>
                 </div>
                 <div className="row">
-                    
+
                     <div className="col-12">
                         <div className="card">
                             <div className="card-header">
@@ -212,20 +225,20 @@ const Dashboard = ({ setPageName }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {topPosts.map(post => 
-                                            <tr key={post.id}>
-                                                <td className="col-3">
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="avatar avatar-md">
-                                                            <img src={post.user_avatar} />
+                                            {topPosts.map(post =>
+                                                <tr key={post.id}>
+                                                    <td className="col-3">
+                                                        <div className="d-flex align-items-center">
+                                                            <div className="avatar avatar-md">
+                                                                <img src={post.user_avatar} />
+                                                            </div>
+                                                            <p className="font-bold ms-3 mb-0">{post.uname}</p>
                                                         </div>
-                                                        <p className="font-bold ms-3 mb-0">{post.uname}</p>
-                                                    </div>
-                                                </td>
-                                                <td className="col-auto">
-                                                    <p className=" mb-0">{post.title}</p>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td className="col-auto">
+                                                        <p className=" mb-0">{post.title}</p>
+                                                    </td>
+                                                </tr>
                                             )}
                                         </tbody>
                                     </table>
@@ -235,73 +248,77 @@ const Dashboard = ({ setPageName }) => {
                     </div>
                 </div>
             </div>
-            <div className="col-12 col-lg-3">
-                <div className="card">
-                    <div className="card-body py-4 px-5">
-                        <div className="d-flex align-items-center">
-                            <div className="avatar avatar-xl">
-                                <img src="assets/images/faces/1.jpg" alt="Face 1" />
+           
+                <div className="col-12 col-lg-3">
+                    <div className="card">
+                    {user !== undefined && 
+                        <div className="card-body py-4 px-5">
+                            <div className="d-flex align-items-center">
+                                <div className="avatar avatar-xl">
+                                    <img src={user.user.details.image} alt="Face 1" />
+                                </div>
+                                <div className="ms-3 name">
+                                    <h5 className="font-bold">{user.user.details.name}</h5>
+                                    <h6 className="text-muted mb-0">{getUname()}</h6>
+                                </div>
                             </div>
-                            <div className="ms-3 name">
-                                <h5 className="font-bold">John Duck</h5>
-                                <h6 className="text-muted mb-0">@johnducky</h6>
+                        </div>
+                    }
+                    </div>
+                    <div className="card">
+                        <div className="card-header">
+                            <h4>Recent Messages</h4>
+                        </div>
+                        <div className="card-content pb-4">
+                            <div className="recent-message d-flex px-4 py-3">
+                                <div className="avatar avatar-lg">
+                                    <img src="assets/images/faces/4.jpg" />
+                                </div>
+                                <div className="name ms-4">
+                                    <h5 className="mb-1">Hank Schrader</h5>
+                                    <h6 className="text-muted mb-0">@johnducky</h6>
+                                </div>
                             </div>
+                            <div className="recent-message d-flex px-4 py-3">
+                                <div className="avatar avatar-lg">
+                                    <img src="assets/images/faces/5.jpg" />
+                                </div>
+                                <div className="name ms-4">
+                                    <h5 className="mb-1">Dean Winchester</h5>
+                                    <h6 className="text-muted mb-0">@imdean</h6>
+                                </div>
+                            </div>
+                            <div className="recent-message d-flex px-4 py-3">
+                                <div className="avatar avatar-lg">
+                                    <img src="assets/images/faces/1.jpg" />
+                                </div>
+                                <div className="name ms-4">
+                                    <h5 className="mb-1">John Dodol</h5>
+                                    <h6 className="text-muted mb-0">@dodoljohn</h6>
+                                </div>
+                            </div>
+                            <div className="px-4">
+                                <button className='btn btn-block btn-xl btn-light-primary font-bold mt-3'>Start
+                                    Conversation</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className="card-header">
+                            <h4>Visitors Profile</h4>
+                        </div>
+                        <div className="card-body">
+                            <Chart
+                                options={visitorsProfile}
+                                series={visitorsProfile.series}
+                                type={visitorsProfile.chart.type}
+                                height={visitorsProfile.chart.height}
+                                width={visitorsProfile.chart.width}
+                            />
                         </div>
                     </div>
                 </div>
-                <div className="card">
-                    <div className="card-header">
-                        <h4>Recent Messages</h4>
-                    </div>
-                    <div className="card-content pb-4">
-                        <div className="recent-message d-flex px-4 py-3">
-                            <div className="avatar avatar-lg">
-                                <img src="assets/images/faces/4.jpg" />
-                            </div>
-                            <div className="name ms-4">
-                                <h5 className="mb-1">Hank Schrader</h5>
-                                <h6 className="text-muted mb-0">@johnducky</h6>
-                            </div>
-                        </div>
-                        <div className="recent-message d-flex px-4 py-3">
-                            <div className="avatar avatar-lg">
-                                <img src="assets/images/faces/5.jpg" />
-                            </div>
-                            <div className="name ms-4">
-                                <h5 className="mb-1">Dean Winchester</h5>
-                                <h6 className="text-muted mb-0">@imdean</h6>
-                            </div>
-                        </div>
-                        <div className="recent-message d-flex px-4 py-3">
-                            <div className="avatar avatar-lg">
-                                <img src="assets/images/faces/1.jpg" />
-                            </div>
-                            <div className="name ms-4">
-                                <h5 className="mb-1">John Dodol</h5>
-                                <h6 className="text-muted mb-0">@dodoljohn</h6>
-                            </div>
-                        </div>
-                        <div className="px-4">
-                            <button className='btn btn-block btn-xl btn-light-primary font-bold mt-3'>Start
-                                Conversation</button>
-                        </div>
-                    </div>
-                </div>
-                <div className="card">
-                    <div className="card-header">
-                        <h4>Visitors Profile</h4>
-                    </div>
-                    <div className="card-body">
-                        <Chart 
-                            options={visitorsProfile}
-                            series={visitorsProfile.series}
-                            type={visitorsProfile.chart.type}
-                            height={visitorsProfile.chart.height}
-                            width={visitorsProfile.chart.width}
-                        />
-                    </div>
-                </div>
-            </div>
+   
         </section>
     );
 }

@@ -2,6 +2,8 @@ const base = 'http://127.0.0.1:8000'
 // const authToken = "Bearer $2y$10$FlOGWK5tYonpmWcYdyBTk.V0r1x9.EuDwTMvFKKMDqZbmbyWyCEdC::1"
 let authToken = ""
 let type = ""
+let username = ""
+let Id = ""
 export const setAuthToken = (token) => {
     authToken = token
 }
@@ -11,6 +13,18 @@ export const setType = (t) => {
 
 export const getType = () => {
     return type;
+}
+export const setUname = (uname) => {
+    username = uname;
+}
+export const getUname = () => {
+    return username;
+}
+export const setId = (id) => {
+    Id = id;
+}
+export const getId = () => {
+    return Id;
 }
 
 export const routes = {
