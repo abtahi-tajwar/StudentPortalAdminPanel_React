@@ -11,7 +11,7 @@ import { callApi, routes } from '../../routes';
 import { Link } from 'react-router-dom';
 
 function Roles({ setPageName }) {
-    setPageName("Changle Roles")
+    setPageName("Change Roles")
     const [userList, setUserList] = useState([]);
     const [searchText, setSearchText] = useState("");
 
