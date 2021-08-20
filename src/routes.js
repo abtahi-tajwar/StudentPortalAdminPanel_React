@@ -49,6 +49,9 @@ export const routes = {
     moderatorRequests: `${base}/api/admin/moderator/request`,
     acceptModerator: (id => `${base}/api/admin/moderator/approve/${id}`),
     declineModerator: (id => `${base}/api/admin/moderator/decline/${id}`),
+    instructorRequests: `${base}/api/admin/instructor/request`,
+    acceptInstructor: (id => `${base}/api/admin/instructor/approve/${id}`),
+    declineInstructor: (id => `${base}/api/admin/instructor/decline/${id}`),
     getWebsiteInfo: `${base}/api/admin/website-info`,
     updateWebsiteInfo: `${base}/api/admin/update/website-info`
 }

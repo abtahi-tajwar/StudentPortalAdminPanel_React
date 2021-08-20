@@ -111,6 +111,17 @@ function Sidebar() {
                                 </Link>
                             </li>
                         }
+                        {getType() === 'moderator' && 
+                            <li 
+                                className={activeMenu.instructor_requests !== undefined ? 'sidebar-item active' : 'sidebar-item'} 
+                                onClick={() => handleSetActive('instructor_requests')}
+                            >
+                                <Link to="/instructor_request" className='sidebar-link'>
+                                    <i className="bi bi-person-check-fill"></i>
+                                    <span>Instructor Requests</span>
+                                </Link>
+                            </li>
+                        }
                         {getType() === 'admin' &&
                         
                             <li 

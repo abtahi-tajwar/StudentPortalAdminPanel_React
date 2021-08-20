@@ -16,6 +16,7 @@ import WebsiteInfo from "./pages/website/WebsiteInfo";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import { getType } from "./routes";
+import InstructorRequest from "./pages/instructor_request/InsturctorRequest";
 
 
 function App() {
@@ -69,6 +70,11 @@ function App() {
                   {getType() === 'admin' &&
                     <Route path="/moderator_request">
                       <ModeratorRequests setPageName={setPageName} />
+                    </Route>
+                  }
+                  {getType() === 'moderator' &&
+                    <Route path="/instructor_request">
+                      <InstructorRequest setPageName={setPageName} />
                     </Route>
                   }
                   {getType() === 'admin' &&
