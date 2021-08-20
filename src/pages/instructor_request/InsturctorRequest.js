@@ -119,8 +119,8 @@ function InstructorRequest({ setPageName }) {
                 open={modalOpen} 
                 handleConfirm={confirmInstructorAction}
                 handleClose={handleModalClose}
-                title="Accept Instructor"
-                message="Are you sure you want to Accpet this Instructor?"
+                title={`${currentInstructorAction.action} Moderator`} 
+                message={`Are you sure you want to ${currentInstructorAction.action} this Instructor?`}
             />
             {loading ? 
             <ClipLoader 

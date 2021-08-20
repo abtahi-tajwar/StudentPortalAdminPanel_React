@@ -119,8 +119,8 @@ function ModeratorRequests({ setPageName }) {
                 open={modalOpen} 
                 handleConfirm={confirmModeratorAction}
                 handleClose={handleModalClose}
-                title="Accept Moderator"
-                message="Are you sure you want to Accpet this Moderator?"
+                title= {`${currentModeratorAction.action} Moderator`} 
+                message={`Are you sure you want to ${currentModeratorAction.action} this Moderator?`}
             />
             {loading ? 
             <ClipLoader 

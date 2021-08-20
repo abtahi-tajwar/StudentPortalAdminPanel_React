@@ -88,7 +88,7 @@ const CreatePost = ({ setPageName }) => {
                     <div className="mb-3">
                         <label htmlFor="post-description" className="form-label">Post Description</label>
                         <textarea 
-                            value=""
+                            
                             className="form-control" 
                             name="post-description" 
                             id="post_description" 
