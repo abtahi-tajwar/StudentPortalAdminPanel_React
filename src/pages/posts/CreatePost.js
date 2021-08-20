@@ -3,7 +3,10 @@ import { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { routes, callApi, postFormValue, /*postValue*/ } from '../../routes'
 
-function CreatePost({ setPageName }) {
+const CreatePost = ({ setPageName }) => {
+    useEffect(() => {
+        setPageName("Create Post")
+      }, []);
 
     const [input, setInput] = useState({
         post_title: "",

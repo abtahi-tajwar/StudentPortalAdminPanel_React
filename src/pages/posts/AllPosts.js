@@ -19,7 +19,9 @@ const loaderCss = {
 
 function AllPosts({ setPageName }) {
 
-    setPageName("All Posts")
+        useEffect(() => {
+            setPageName("All Posts")
+          }, []);
 
     function handlePagnation(props) {
         console.log(props)
