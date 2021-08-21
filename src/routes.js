@@ -102,9 +102,11 @@ export const postValue = async (url, data) => {
     }
 }
 export const postFormValue = async (url, data) => {
+    console.log(data)
     let result = null
     let formData = new FormData();
     for (const [key, value] of Object.entries(data)) {
+        console.log(key, value)
         formData.append(key, value)
     }
 

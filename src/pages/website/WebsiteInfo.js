@@ -14,9 +14,6 @@ function WebsiteInfo({ setPageName }) {
             setInput(data)
         })
     }, [])
-    useEffect(() => {
-        console.log(input)
-    })
     const handleInput = (e) => {
         setInput({ ...input, [e.target.id]: e.target.value })
     }
