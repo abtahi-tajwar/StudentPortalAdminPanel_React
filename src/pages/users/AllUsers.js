@@ -6,7 +6,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Switch, Chip } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { Redirect, Link } from 'react-router-dom';
-
+import { howManyTimeAgo } from '../../utils';
 
 const loaderCss = {
     width: '100px',
@@ -73,7 +73,7 @@ function AllUsers({ setPageName }) {
         {
             field: 'created_at',
             title: 'Joined At',
-            render: rowData  => <p>{rowData.created_at} days ago</p>,
+            render: rowData  => <p>{rowData.created_at}</p>,
             width: 150
         },
         
@@ -94,7 +94,7 @@ function AllUsers({ setPageName }) {
                     type: item.type,
                     banned: item.banned,
                     status: item.status,
-                    created_at: calculateDaysBetweenDates(new Date(item.created_at))
+                    created_at: howManyTimeAgo(item.created_at)
                 })
             })
             setRows(result)

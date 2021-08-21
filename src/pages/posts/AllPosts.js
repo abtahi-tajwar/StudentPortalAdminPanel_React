@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import MaterialTable from 'material-table'
 import { ClipLoader } from 'react-spinners'
 import { routes, callApi, deleteReq } from '../../routes'
+import { howManyTimeAgo } from '../../utils'
 
 // import EditIcon from '@material-ui/icons/Edit';
 
@@ -53,7 +54,7 @@ function AllPosts({ setPageName }) {
         {
             field: 'date',
             title: 'Date',
-            render: rowData  => <p>{rowData.created_at} days ago</p>,
+            render: rowData  => <p>{rowData.date}</p>,
             width: 150
         },
         {
@@ -69,16 +70,17 @@ function AllPosts({ setPageName }) {
         .then((data) => {
             let result = []
             data.data.forEach(item => {
+                console.log(item)
                 result.push({
                     id: item.id,
                     title: item.title,
-                    date: calculateDaysBetweenDates(new Date(item.created_at)),
+                    date: howManyTimeAgo(item.created_at),
                     author: item.user.uname,
                 })
             })
             setRows(result)
             setLoading(false)
-            console.log(result, rows)
+            //console.log(result, rows)
         })
     }, [])
     return (
