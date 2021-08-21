@@ -33,7 +33,7 @@ function Sidebar() {
                     <div className="sidebar-header">
                         <div className="d-flex justify-content-between">
                             <div className="logo">
-                                <Link to="/"><img src="assets/images/favicon-admin.png" alt="Logo" srcSet="" height="500px" /></Link>
+                                <Link id="sidebar_logo_text" to="/"><img src="assets/images/favicon-admin.png" id="sidebar_main_logo" alt="Logo" srcSet="" style={{height: '400px !important'}} />&nbsp;Student Portal</Link>
                             </div>
                             <div className="toggler">
                                 <a href="#" className="sidebar-hide d-xl-none d-block"><i className="bi bi-x bi-middle"></i></a>

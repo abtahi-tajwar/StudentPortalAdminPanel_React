@@ -36,7 +36,17 @@
 .main {
     padding: 0px 10px;
 }
-
+#sidebar_main_logo {
+    height: 32px;
+}
+#sidebar_logo_text {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: black;
+}
+#sidebar_logo_text:hover {
+    color: rgb(77, 77, 77);
+}
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
 }
