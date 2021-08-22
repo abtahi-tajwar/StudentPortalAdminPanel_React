@@ -36,6 +36,7 @@ export const routes = {
     searchUser: (text => `${base}/api/users/search/${text}`),
     changeUserRole: `${base}/api/admin/users/role/edit-role`,
     getAllPosts: (page => `${base}/api/posts?page=${page}`),
+    getPost: (id => `${base}/api/posts/${id}`),
     deletePost: (id => `${base}/api/posts/${id}/delete`),
     adminDeletePost: (id => `${base}/api/admin/posts/delete/${id}`),
     createPost: `${base}/api/posts/create`,

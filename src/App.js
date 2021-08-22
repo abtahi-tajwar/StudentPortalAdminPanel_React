@@ -17,6 +17,7 @@ import Login from "./components/Login";
 import Logout from "./components/Logout";
 import { getType } from "./routes";
 import InstructorRequest from "./pages/instructor_request/InsturctorRequest";
+import ViewPost from "./pages/posts/ViewPost";
 
 
 function App() {
@@ -49,6 +50,11 @@ function App() {
                   <Route path="/posts/all" exact>
                     <AllPosts setPageName={setPageName} />
                   </Route>
+                  <Route path="/post/view/:id" exact component={
+                    ({ match }) => {
+                      return <ViewPost setPageName={setPageName} match={match} />
+                    }
+                  }></Route>
                   <Route path="/posts/create" exact>
                     <CreatePost setPageName={setPageName} />
                   </Route>

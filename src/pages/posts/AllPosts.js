@@ -4,6 +4,8 @@ import MaterialTable from 'material-table'
 import { ClipLoader } from 'react-spinners'
 import { routes, callApi, deleteReq } from '../../routes'
 import { howManyTimeAgo } from '../../utils'
+import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router'
 
 // import EditIcon from '@material-ui/icons/Edit';
 
@@ -26,6 +28,9 @@ function AllPosts({ setPageName }) {
 
     function handlePagnation(props) {
         console.log(props)
+    }
+    function viewPost(id) {
+        return <Redirect to={`/post/view/${id}`} />
     }
 
     function calculateDaysBetweenDates(date1) {
@@ -111,7 +116,7 @@ function AllPosts({ setPageName }) {
                         icon: 'delete',
                         tooltip: 'Delete',
                         onClick: (event, rowData) => deleteItem(rowData.id)
-                    },
+                    }
                 ]}
             /> }
             
